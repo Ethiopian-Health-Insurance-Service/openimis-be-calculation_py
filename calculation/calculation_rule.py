@@ -29,7 +29,7 @@ class ContributionValuationRule(AbsStrategy):
     def active_for_object(cls, instance, context, type='account_receivable', sub_type='contribution'):
         return (
             instance.__class__.__name__ == "ContractContributionPlanDetails"
-            and  context in ["value", "members", "validity"]
+            and context in ["value", "members", "validity"]
         ) and cls.check_calculation(instance)
 
     @classmethod
@@ -46,8 +46,8 @@ class ContributionValuationRule(AbsStrategy):
         elif class_name == "ContributionPlan":
             match = UUID(str(cls.uuid)) == UUID(str(instance.calculation))
         elif class_name == "ContributionPlanBundle":
-            list_cpbd = list(ContributionPlanBundleDetails.objects.filter(
-                contribution_plan_bundle=instance
+            list_cpbd = list(instance.contributionplanbundledetails_set.filter(
+                is_deleted=False
             ))
             for cpbd in list_cpbd:
                 if match is False:
@@ -100,11 +100,18 @@ class ContributionValuationRule(AbsStrategy):
                         return False
                     value = float(income) * (rate / 100)
                     return value
-                elif context == 'members':
-                    if instance.insuree.family:
-                        return list(instance.insuree.family.members.filter(validity_to__isnull=True))
-                    else:
-                        return [instance.insuree]
+            elif context == 'members':
+                cp_params, cd_params = instance.contribution_plan.json_ext, instance.contract_details.json_ext
+                if (
+                    instance.contract_details.insuree.family
+                    and 'includeFamily' in cp_params
+                    and cp_params['includeFamily']
+                ):
+                    return list(instance.contract_details.insuree.family.members.filter(
+                        validity_to__isnull=True
+                    ))
+                else:
+                    return [instance.contract_details.insuree]
 
             elif context == 'validity':
                 validity_from = kwargs.get('validity_from', None)
