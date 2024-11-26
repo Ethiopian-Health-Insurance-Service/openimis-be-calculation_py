@@ -2,62 +2,78 @@ CLASS_RULE_PARAM_VALIDATION = [
     {
         "class": "ContributionPlan",
         "parameters": [
-            {
-                "type": "select",
-                "name": "rate",
+           {
+                "type": "number",
+                "name": "rate_employer_public",
                 "label": {
-                    "en": "Percentage of income",
-                    "fr": "Pourcentage du salaire"
+                    "en": "Employer's percentage in Public Sector",
+                    "fr": "Pourcentage de l'employeur dans le secteur public"
                 },
                 "rights": {
-                    "read": "151201",
-                    "write": "151202",
-                    "update": "151203",
-                    "replace": "151206",
-                },
-                'relevance': "True",
-                'condition': "INPUT>1",
-                'optionSet': [
-                    {
-                        "value": "5",
-                        "label": {
-                            "en": "5%",
-                            "fr": "5%"
-                        }
-                    },
-                    {
-                        "value": "10",
-                        "label": {
-                            "en": "10%",
-                            "fr": "10%"
-                        }
-                    },
-                    {
-                        "value": "15",
-                        "label": {
-                            "en": "15%",
-                            "fr": "15%"
-                        }
-                    },
-                ],
-                "default": "5"
-            },
-            {
-                "type": "checkbox",
-                "name": "includeFamily",
-                "label": {
-                    "en": "include family members",
-                    "fr": "Inclure les membres de la familles"
-                },
-                "rights": {
-                    "read": "151201",
-                    "write": "151202",
-                    "update": "151203",
-                    "replace": "151206",
+                    "read": "150201",
+                    "write": "150202",
+                    "update": "150203",
+                    "replace": "150206",
                 },
                 "relevance": "True",
-                "default": "False"
+                "default": "0",
+                "min": "0",
+                "max": "100"
             },
+            {
+                "type": "number",
+                "name": "rate_employer_private",
+                "label": {
+                    "en": "Employer's percentage in Private Sector",
+                    "fr": "Pourcentage de l'employeur dans le secteur privé"
+                },
+                "rights": {
+                    "read": "150201",
+                    "write": "150202",
+                    "update": "150203",
+                    "replace": "150206",
+                },
+                "relevance": "True",
+                "default": "0",
+                "min": "0",
+                "max": "100"
+            },
+            {
+                "type": "number",
+                "name": "rate_employee_public",
+                "label": {
+                    "en": "Employee's contribution percentage in the Public Sector",
+                    "fr": "Pourcentage de l'employé dans le secteur public"
+                },
+                "rights": {
+                    "read": "150201",
+                    "write": "150202",
+                    "update": "150203",
+                    "replace": "150206",
+                },
+                "relevance": "True",
+                "default": "0",
+                "min": "0",
+                "max": "100"
+            },
+            {
+                "type": "number",
+                "name": "rate_employee_private",
+                "label": {
+                    "en": "Employee's contribution percentage in the Private Sector",
+                    "fr": "Pourcentage de l'employé dans le secteur privé"
+                },
+                "rights": {
+                    "read": "150201",
+                    "write": "150202",
+                    "update": "150203",
+                    "replace": "150206",
+                },
+                "relevance": "True",
+                "default": "0",
+                "min": "0",
+                "max": "100"
+            }
         ],
     },
     {

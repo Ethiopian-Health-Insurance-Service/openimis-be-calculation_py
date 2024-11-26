@@ -101,8 +101,24 @@ class ContributionValuationRule(AbsCalculationRule):
                 cd_params = cd_params["calculation_rule"] if "calculation_rule" in cd_params else None
             if phi_params:
                 phi_params = phi_params["calculation_rule"] if "calculation_rule" in phi_params else None
-            if cp_params is not None and "rate" in cp_params:
-                rate = int(cp_params["rate"])
+            if cp_params is not None:
+                rate_employer_public = 0
+                rate_employer_private = 0
+                rate_employee_public = 0
+                rate_employee_private = 0
+                if cp_params:
+                    print("voici la valeur cp_param", cp_params)
+                    if cp_params:
+                        if "rate_employer_public" in cp_params:
+                            rate_employer_public = int(cp_params["rate_employer_public"])
+                        if "rate_employer_private" in cp_params:
+                            rate_employer_private = int(cp_params["rate_employer_private"])
+                        if "rate_employee_public" in cp_params:
+                            rate_employee_public = int(cp_params["rate_employee_public"])
+                        if "rate_employee_private" in cp_params:
+                            rate_employee_private = int(cp_params["rate_employee_private"])
+                rate = rate_employer_public + rate_employer_private + rate_employee_public + rate_employee_private
+                rate = int(rate)
                 if cd_params:
                     if "income" in cd_params:
                         income = float(cd_params["income"])
